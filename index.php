@@ -2,6 +2,7 @@
 
 $version = "1.8";
 $title = "MONSTA Box";
+$forceLang = false;
 
 require("config.php");
 
@@ -405,6 +406,7 @@ function displayLoginForm($posted)
     global $showAdvOption;
     global $showLockSess;
     global $title;
+    global $forceLang;
 
     // Check for lockout
     $date_now = date("YmdHis");
@@ -628,7 +630,8 @@ if ($versionCheck == 1 && ((intval(ini_get("allow_url_fopen")) == 1 && (function
 <p><hr noshade>
 
 <?php
-        echo displayLangSelect($_SESSION["lang"]);
+        if ($forceLang === false)
+            echo displayLangSelect($_SESSION["lang"]);
 ?>
 <?php
         echo displaySkinSelect($skin);
@@ -4300,6 +4303,7 @@ var upload_limit = '<?php
 
 function setLangFile()
 {
+    global $forceLang;
     
     // The order of these determines the proper display
     if ($_COOKIE["lang"] != "")
@@ -4308,6 +4312,8 @@ function setLangFile()
         $lang = $_SESSION["lang"];
     if (isset($_POST["lang"]))
         $lang = $_POST["lang"];
+    if ($forceLang !== false)
+        $lang = $forceLang;
     
     if ($lang == "") {
         
