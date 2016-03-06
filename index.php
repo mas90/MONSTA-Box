@@ -779,6 +779,7 @@ function getFtpRawList($folder_path)
     
     global $conn_id;
     global $lang_folder_cant_access;
+    global $listHideHidden;
     
     $isError = 0;
     
@@ -795,7 +796,12 @@ function getFtpRawList($folder_path)
     }
     
     if ($isError == 0)
-        return ftp_rawlist($conn_id, "-a ".".");
+        if ($listHideHidden == 1) {
+            $params = "";
+        } else {
+            $params = "-a ";
+        }
+        return ftp_rawlist($conn_id, $params.".");
 }
 
 function displayFiles()
