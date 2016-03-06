@@ -1628,6 +1628,7 @@ function displayFtpActions()
     global $lang_btn_delete;
     global $lang_btn_chmod;
     global $lang_btn_logout;
+    global $hideWrite;
 ?>
 <div id="ftpActionButtonsDiv">
     <input type="button" value="<?php
@@ -1648,6 +1649,9 @@ if (class_exists('ZipArchive') == 1) {
 ?>
     <input type="hidden" id="actionButtonDl"> 
 <?php } ?>
+<?php
+  if ($hideWrite != 1) {
+?>
     <input type="button" id="actionButtonCut" value="<?php
     echo $lang_btn_cut;
 ?>" onClick="actionFunctionCut('','');" disabled class="<?php
@@ -1683,6 +1687,7 @@ if (class_exists('ZipArchive') == 1) {
 ?>">
 <?php
     }
+  }
 ?>
 <div class="floatRight">
     <input type="button" value="<?php
@@ -1749,7 +1754,8 @@ function displayAjaxFooter()
     global $lang_info_drag_drop;
     global $lang_btn_fetch_file;
     global $showHostInfo;
-    
+    global $hideWrite;
+
 ?>
 <div id="footerDiv">
     <div id="hostInfoDiv">
@@ -1768,17 +1774,25 @@ function displayAjaxFooter()
     echo $lang_info_user;
 ?>:</span> <?php
     echo $_SESSION["ftp_user"];
+    if ($hideWrite != 1) {
 ?>
         <span><?php
-    echo $lang_info_upload_limit;
+        echo $lang_info_upload_limit;
 ?>:</span> <?php
-    echo formatFileSize($_SESSION["upload_limit"]);
+        echo formatFileSize($_SESSION["upload_limit"]);
+    }
 ?>
         <!-- <span><?php
     echo $lang_info_drag_drop;
 ?>:</span> <div id="dropFilesCheckDiv"></div> --> <!-- Drag & Drop check commented out as considered redundant -->
     </div>
-    
+
+<?php
+    if ($hideWrite == 1) {
+        echo "</div>\n";
+        return;
+    }
+?>
     <div class="floatLeft10">
         <input type="button" value="<?php
     echo $lang_btn_new_folder;
