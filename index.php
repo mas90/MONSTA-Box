@@ -407,6 +407,7 @@ function displayLoginForm($posted)
     global $lang_ip_check;
     global $lang_session_expired;
     global $versionCheck;
+    global $versionHide;
     global $showAdvOption;
     global $showLockSess;
     global $title;
@@ -561,7 +562,7 @@ if ($versionCheck == 1 && ((intval(ini_get("allow_url_fopen")) == 1 && (function
     echo $version;
 ?>" width="200" height="20" scrolling="no" style="border:0"></iframe>
 <?php
-} else {
+} elseif ($versionHide != 1) {
 ?>
 <a href="http://www.monstahq.com/apps/box/splash/">version <?php
     echo $version;
