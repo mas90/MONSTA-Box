@@ -3,6 +3,7 @@
 $version = "1.8";
 $title = "MONSTA Box";
 $forceLang = false;
+$forceSkin = false;
 
 require("config.php");
 
@@ -346,6 +347,7 @@ function displayHeader()
     
     global $version;
     global $title;
+    global $forceSkin;
     
     // The order of these determines the proper display
     if ($_COOKIE["skin"] != "")
@@ -354,6 +356,8 @@ function displayHeader()
         $skin = $_SESSION["skin"];
     if (isset($_POST["skin"]))
         $skin = $_POST["skin"];
+    if ($forceSkin !== false)
+        $skin = $forceSkin;
     if ($skin == "")
         $skin = "monsta";
     
@@ -407,6 +411,7 @@ function displayLoginForm($posted)
     global $showLockSess;
     global $title;
     global $forceLang;
+    global $forceSkin;
 
     // Check for lockout
     $date_now = date("YmdHis");
@@ -634,7 +639,8 @@ if ($versionCheck == 1 && ((intval(ini_get("allow_url_fopen")) == 1 && (function
             echo displayLangSelect($_SESSION["lang"]);
 ?>
 <?php
-        echo displaySkinSelect($skin);
+        if ($forceSkin === false)
+            echo displaySkinSelect($skin);
 ?>
         </div>
     </div>
