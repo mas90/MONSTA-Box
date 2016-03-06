@@ -1,6 +1,7 @@
 <?php
 
 $version = "1.8";
+$title = "MONSTA Box";
 
 require("config.php");
 
@@ -343,6 +344,7 @@ function displayHeader()
 {
     
     global $version;
+    global $title;
     
     // The order of these determines the proper display
     if ($_COOKIE["skin"] != "")
@@ -358,9 +360,7 @@ function displayHeader()
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MONSTA Box v<?php
-    echo $version;
-?></title>
+	<title><?php echo $title; ?></title>
     <link href="style.css?<?php echo date("U"); ?>" rel="stylesheet" type="text/css">
     <link href="skins/<?php
     echo sanitizeStrTrim($skin);
@@ -404,7 +404,8 @@ function displayLoginForm($posted)
     global $versionCheck;
     global $showAdvOption;
     global $showLockSess;
-    
+    global $title;
+
     // Check for lockout
     $date_now = date("YmdHis");
     if ($_SESSION["login_lockout"] > 0 && $date_now < $_SESSION["login_lockout"]) {
@@ -475,7 +476,7 @@ function displayLoginForm($posted)
 
 <div align="center">
     <div id="loginForm" align="left">
-        <div id="loginFormTitle">MONSTA Box</div>
+        <div id="loginFormTitle"><?php echo $title; ?></div>
             <div id="loginFormContent">
 
 <?php
